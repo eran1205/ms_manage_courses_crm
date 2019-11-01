@@ -1,0 +1,19 @@
+{
+  "collection": "counters",
+  "shouldUpdate": true,
+  "loadOrder": 2,
+  "data": [
+    { 
+      "sequence":"areaid", 
+      "sequence_value": 0
+    },
+    {
+      "sequence":"domainid",
+      "sequence_value": 0
+    },
+    {
+      "sequence":"topicid", 
+      "sequence_value": 0
+    }
+  ]
+}

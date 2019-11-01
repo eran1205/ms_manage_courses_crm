@@ -1,0 +1,1 @@
+node seed.js -n manage_courses_crm_db -c mongodb://127.0.0.1:32768/ 
