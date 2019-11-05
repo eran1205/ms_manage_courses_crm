@@ -2,7 +2,7 @@ import * as Joi from 'joi';
 import TopicModel, { ITopicModel } from './model';
 import TopicValidation from './validation';
 import { ITopicService } from './interface';
-import { Types } from 'mongoose';
+import formattedLogger from '../../utils/logger';
 
 /**
  * @export
@@ -15,7 +15,10 @@ const TopicService: ITopicService = {
      */
     async findAll(): Promise < ITopicModel[] > {
         try {
+            formattedLogger.info(`Enter TopicService::findAll()`);
+
             return await TopicModel.find({}).populate('area', 'name');
+
         } catch (error) {
             throw new Error(error.message);
         }
@@ -28,6 +31,8 @@ const TopicService: ITopicService = {
      */
     async findOne(id: string): Promise < ITopicModel > {
         try {
+            formattedLogger.info(`Enter TopicService::findOne() with id: ${id}`);
+
             const validate: Joi.ValidationResult < {
                 id: string
             } > = TopicValidation.getTopic({
@@ -37,6 +42,7 @@ const TopicService: ITopicService = {
             if (validate.error) {
                 throw new Error(validate.error.message);
             }
+            formattedLogger.info(`Pass TopicService::findOne() validation`);
 
             return await TopicModel.findOne({ _id: id }).populate('area', 'name');
         } catch (error) {
@@ -51,11 +57,14 @@ const TopicService: ITopicService = {
      */
     async insert(body: ITopicModel): Promise < ITopicModel > {
         try {
+            formattedLogger.info(`Enter TopicService::insert() with body: ${JSON.stringify(body)}`);
+
             const validate: Joi.ValidationResult < ITopicModel > = TopicValidation.createTopic(body);
 
             if (validate.error) {
                 throw new Error(validate.error.message);
             }
+            formattedLogger.info(`Pass TopicService::insert() validation`);
 
             const topic: ITopicModel = await TopicModel.create(body);
 
@@ -72,6 +81,8 @@ const TopicService: ITopicService = {
      */
     async remove(id: string): Promise < ITopicModel > {
         try {
+            formattedLogger.info(`Enter TopicService::remove() with id: ${id}`);
+
             const validate: Joi.ValidationResult < {
                 id: string
             } > = TopicValidation.removeTopic({
@@ -81,6 +92,7 @@ const TopicService: ITopicService = {
             if (validate.error) {
                 throw new Error(validate.error.message);
             }
+            formattedLogger.info(`Pass TopicService::remove() validation`);
 
             const topic: ITopicModel = await TopicModel.findOneAndDelete({ _id: id });
 

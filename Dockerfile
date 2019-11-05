@@ -1,6 +1,7 @@
 FROM node:carbon
 
 # Env
+ENV NODE_ENV=production
 # ENV MONGODB_DB_MAIN=manage_courses_crm_db
 # ENV MONGODB_URI=mongodb://655c5be043f2:27017/
 
@@ -17,4 +18,4 @@ COPY ./build ./
 
 # Start
 ENTRYPOINT node ./config/server/index.js
-EXPOSE 3000
+# EXPOSE 6000

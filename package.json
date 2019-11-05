@@ -51,10 +51,11 @@
     "node-gyp": "^6.0.0",
     "npm": "^6.12.0",
     "shortid": "^2.2.15",
+    "swagger-jsdoc": "3.2.7",
+    "swagger-ui-express": "4.0.2",
     "ts-node": "6.0.3",
     "util": "0.11.1",
-    "swagger-jsdoc": "3.2.7",
-    "swagger-ui-express": "4.0.2"
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "@types/bcrypt": "3.0.0",

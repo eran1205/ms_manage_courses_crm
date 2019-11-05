@@ -3,6 +3,7 @@ import DomainModel, { IDomainModel } from './model';
 import { Types } from 'mongoose';
 import { IDomainService } from './interface';
 import DomainValidation from './validation';
+import formattedLogger from '../../utils/logger';
 
 /**
  * @export;
@@ -15,6 +16,8 @@ const DomainService: IDomainService = {
      */
     async findAll(): Promise < IDomainModel[] > {
         try {
+            formattedLogger.info(`Enter DomainService::findAll()`);
+            
             return await DomainModel.find({});
         } catch (error) {
             throw new Error(error.message);
@@ -28,6 +31,8 @@ const DomainService: IDomainService = {
      */
     async findOne(id: string): Promise < IDomainModel > {
         try {
+            formattedLogger.info(`Enter DomainService::findOne() with id: ${id}`);
+
             const validate: Joi.ValidationResult < {
                 id: string
             } > = DomainValidation.getDomain({
@@ -37,6 +42,8 @@ const DomainService: IDomainService = {
             if (validate.error) {
                 throw new Error(validate.error.message);
             }
+
+            formattedLogger.info(`Pass DomainService::findOne() validation`);
 
             return await DomainModel.findOne({
                 _id: id
@@ -53,11 +60,15 @@ const DomainService: IDomainService = {
      */
     async insert(body: IDomainModel): Promise < IDomainModel > {
         try {
+            formattedLogger.info(`Enter DomainService::insert() with body: ${JSON.stringify(body)}`);
+
             const validate: Joi.ValidationResult < IDomainModel > = DomainValidation.createDomain(body);
 
             if (validate.error) {
                 throw new Error(validate.error.message);
             }
+            formattedLogger.info(`Pass DomainService::insert() validation`);
+
             const domain: IDomainModel = await DomainModel.create(body);
 
             return domain;
@@ -73,12 +84,15 @@ const DomainService: IDomainService = {
      */
     async remove(id: string): Promise < IDomainModel > {
         try {
+            formattedLogger.info(`Enter DomainService::remove() with id: ${id}`);
+
             const validate: Joi.ValidationResult < { id: string } > = 
                 DomainValidation.removeDomain({ id });
 
             if (validate.error) {
                 throw new Error(validate.error.message);
             }
+            formattedLogger.info(`Pass DomainService::remove() validation`);
 
             const domain: IDomainModel = await DomainModel.findOneAndRemove({
                 _id: id

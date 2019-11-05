@@ -1,6 +1,7 @@
 import * as express from 'express';
 import * as Middleware from '../middleware/middleware';
 import * as Routes from '../../routes';
+import config from '../env/index';
 
 /**
  * @constant {express.Application}
@@ -25,7 +26,7 @@ Middleware.initErrorHandler(app);
 /**
  * sets port 3000 to default or unless otherwise specified in the environment
  */
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || config.port);
 
 /**
  * sets secret to 'superSecret', otherwise specified in the environment
